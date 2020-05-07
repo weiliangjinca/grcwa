@@ -10,8 +10,6 @@ with open('README.rst') as readme_file:
 with open('HISTORY.rst') as history_file:
     history = history_file.read()
 
-with open('requirements.txt') as f:
-    requirements = f.read().splitlines()    
 here = os.path.abspath(os.path.dirname(__file__))
 def read(*parts):
     with codecs.open(os.path.join(here, *parts), 'r') as fp:
@@ -24,9 +22,6 @@ def find_version(*file_paths):
     if version_match:
         return version_match.group(1)
     raise RuntimeError('Unable to find version string.')
-
-setup_requirements = ['pytest-runner', ]
-test_requirements = ['pytest>=3', ]
 
 setup(
     author="Weiliang Jin",
@@ -44,17 +39,13 @@ setup(
         'Programming Language :: Python :: 3.8',
     ],
     description="Python implementation of rigorous coupled wave analysis, autograd supported for optimization purpose",
-    install_requires=requirements,
+    install_requires=['numpy','autograd'],
     license="MIT license",
     long_description=readme + '\n\n' + history,
     include_package_data=True,
     keywords='grcwa',
     name='grcwa',
     packages=find_packages(),
-    setup_requires=setup_requirements,
-    test_suite='tests',
-    tests_require=test_requirements,
     url='https://github.com/weiliangjinca/grcwa',
     version=find_version('grcwa', '__init__.py'),
-    zip_safe=False,
 )
