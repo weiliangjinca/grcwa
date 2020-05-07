@@ -9,7 +9,7 @@ supported.  Most features in S4's rcwa.cpp are implemented.
         :target: https://pypi.python.org/pypi/grcwa
 
 .. image:: https://img.shields.io/travis/weiliangjinca/grcwa.svg
-        :target: https://travis-ci.com/weiliangjinca/grcwa
+        :target: https://travis-ci.org/weiliangjinca/grcwa
 
 .. image:: https://readthedocs.org/projects/grcwa/badge/?version=latest
         :target: https://grcwa.readthedocs.io/en/latest/?badge=latest
