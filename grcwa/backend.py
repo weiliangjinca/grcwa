@@ -105,4 +105,4 @@ def set_backend(name):
     elif name == 'autograd':
         backend.__class__ = AutogradBackend
     else:
-        raise ValueError(f"unknown backend '{name}'")
+        raise ValueError("unknown backend")
