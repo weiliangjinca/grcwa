@@ -89,6 +89,7 @@ def test_rcwa():
     assert Tz<0
 
 if AG_AVAILABLE:
+    grcwa.set_backend('autograd')
     def test_epsgrad():
         def fun(x):
             obj=rcwa_assembly(x,freq,theta,phi,planewave,pthick,Pscale=1.)
