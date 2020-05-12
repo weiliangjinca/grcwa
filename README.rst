@@ -58,15 +58,16 @@ Quick Start
 * Installation:
 
   .. code-block:: console
-		  
-		  $ pip install grcwa
-
-  Or,
-
-  .. code-block:: console
 
 		  $ git clone git://github.com/weiliangjinca/grcwa
 		  $ pip install .
+
+  Or, (not yet)
+  
+  .. code-block:: console
+		  
+		  $ pip install grcwa
+
 
 * Example 1: transmission and reflection of a square lattice of a hole: `ex1.py <./example/ex1.py>`_
 
