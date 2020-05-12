@@ -21,7 +21,7 @@ slabs, supporting automatic differentation with autograd
 Features
 ---------
 .. image:: imag/scheme.png
-	   :width: 200
+	   :width: 150
 
 RCWA solves EM-scattering problems of stacked photonic crystal
 slabs. As illustrated in the above figure, the photonic structure can
@@ -51,7 +51,7 @@ Quick Start
 * A simple example:
 
   .. image:: imag/ex.png
-	     :width: 200
+	     :width: 100
   
   ..
      .. code-block:: python
