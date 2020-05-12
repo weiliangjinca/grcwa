@@ -19,7 +19,7 @@ Tutorial
 
 * Example 2: Transmission and reflection of two patterned layers: (see *ex2.py* in the example folder), as illustrated in the figure below (only a **unit cell** is plotted)
 
-  .. image:: ../imag/ex.png
+  .. image:: ex.png
 	     
   * *Periodicity* in the lateral direction is  *L*\ :sub:`x` = *L*\ :sub:`y` = 0.2, and *frequency* is 1.0.
 

@@ -185,3 +185,7 @@ styles follow their implementation in `legume
 <https://github.com/fancompute/legume>`_. Haiwen Wang and Cheng Guo
 provided useful feedback. Lastly, the template was credited to
 Cookiecutter_ and the `audreyr/cookiecutter-pypackage`_.
+
+
+.. _Cookiecutter: https://github.com/audreyr/cookiecutter
+.. _`audreyr/cookiecutter-pypackage`: https://github.com/audreyr/cookiecutter-pypackage

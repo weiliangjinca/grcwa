@@ -31,7 +31,7 @@ following paper:
 
 Features
 ---------
-.. image:: ../imag/scheme.png
+.. image:: scheme.png
 
 RCWA solves EM-scattering problems of stacked photonic crystal
 slabs. As illustrated in the above figure, the photonic structure can
