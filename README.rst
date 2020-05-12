@@ -21,9 +21,17 @@ slabs, supporting automatic differentation with autograd
 Features
 ---------
 .. image:: imag/scheme.png
+	   :width: 200
 
-* As illustrated in the above figure, each photonic crystal layer can
-  have arbitrary dielectric profile on the *2D* grids.
+RCWA solves EM-scattering problems of stacked photonic crystal
+slabs. As illustrated in the above figure, the photonic structure can
+have *N* layers of different thicknesses and independent spatial
+dielectric profiles. All layers are periodic in the two lateral
+directions of the same periodicity, and invariant along the vertical
+direction.
+
+* Each photonic crystal layer can have arbitrary dielectric profile on
+  the *2D* grids.
 * **autograd** is integrated into the package, allowing for automated
   and fast gradient evaluations for the sake of large-scale
   optimizations. Autogradable parameters include dielectric constant on
@@ -40,7 +48,10 @@ Quick Start
 		  
 		  pip install grcwa
 
-* Setup RCWA calucation [TODO]
+* A simple example:
+
+  .. image:: imag/ex.png
+	     :width: 200
   
   ..
      .. code-block:: python

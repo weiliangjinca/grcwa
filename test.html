@@ -368,18 +368,23 @@ ul.auto-toc {
 <a class="reference external image-reference" href="https://grcwa.readthedocs.io/en/latest/?badge=latest"><img alt="Documentation Status" src="https://readthedocs.org/projects/grcwa/badge/?version=latest" /></a>
 <p>grcwa (autoGradable RCWA) is a python implementation of rigorous
 coupled wave analysis (RCWA) for arbitrarily shaped photonic crystal
-slabs.</p>
+slabs, supporting automatic differentation with autograd</p>
 <ul class="simple">
 <li>Free software: MIT license</li>
 <li>Documentation: <a class="reference external" href="https://grcwa.readthedocs.io">https://grcwa.readthedocs.io</a>.</li>
 </ul>
-<img alt="imag/scheme.png" src="imag/scheme.png" style="width: 200px;" />
 <div class="section" id="features">
 <h1>Features</h1>
+<img alt="imag/scheme.png" src="imag/scheme.png" style="width: 200px;" />
+<p>RCWA solves EM-scattering problems of stacked photonic crystal
+slabs. As illustrated in the above figure, the photonic structure can
+have <em>N</em> layers of different thicknesses and independent spatial
+dielectric profiles. All layers are periodic in the two lateral
+directions of the same periodicity, and invariant along the vertical
+direction.</p>
 <ul class="simple">
-<li>Each photonic crystal layer can have arbitrary dielectric profile,
-which is specified through a <em>2D</em> array whose values correspond to
-dielectric constants on structured grids.</li>
+<li>Each photonic crystal layer can have arbitrary dielectric profile on
+the <em>2D</em> grids.</li>
 <li><strong>autograd</strong> is integrated into the package, allowing for automated
 and fast gradient evaluations for the sake of large-scale
 optimizations. Autogradable parameters include dielectric constant on
@@ -396,7 +401,8 @@ directions must be fixed).</li>
 <span class="name">pip</span> <span class="name">install</span> <span class="name">grcwa</span>
 </pre>
 </li>
-<li><p class="first">Setup RCWA calucation [TODO]</p>
+<li><p class="first">A simple example:</p>
+<img alt="imag/ex.png" src="imag/ex.png" style="width: 200px;" />
 <!-- .. code-block:: python
 
                 import grcwa
