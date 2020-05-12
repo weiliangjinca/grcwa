@@ -18,14 +18,12 @@ slabs, supporting automatic differentation with autograd
 * Free software: MIT license
 * Documentation: https://grcwa.readthedocs.io.
 
-.. image:: imag/scheme.png
-   :width: 200
-
 Features
 ---------
-* Each photonic crystal layer can have arbitrary dielectric profile,
-  which is specified through a *2D* array whose values correspond to
-  dielectric constants on structured grids.
+.. image:: imag/scheme.png
+
+* As illustrated in the above figure, each photonic crystal layer can
+  have arbitrary dielectric profile on the *2D* grids.
 * **autograd** is integrated into the package, allowing for automated
   and fast gradient evaluations for the sake of large-scale
   optimizations. Autogradable parameters include dielectric constant on
