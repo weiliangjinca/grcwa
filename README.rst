@@ -26,8 +26,7 @@ RCWA solves EM-scattering problems of stacked photonic crystal
 slabs. As illustrated in the above figure, the photonic structure can
 have *N* layers of different thicknesses and independent spatial
 dielectric profiles. All layers are periodic in the two lateral
-directions of the same periodicity, and invariant along the vertical
-direction.
+directions, and invariant along the vertical direction.
 
 * Each photonic crystal layer can have arbitrary dielectric profile on
   the *2D* grids.
@@ -55,9 +54,9 @@ Quick Start
     layers (only a **unit cell** is plotted) are sandwiched between two
     uniform slabs.
 
-    *Periodicity* in the lateral direction is :math:`{\Lambda_x=\Lambda_y=0.2}`, and *frequency* is 1.0.
+    *Periodicity* in the lateral direction is  *L*\ :sub:`x` = *L*\ :sub:`y` = 0.2, and *frequency* is 1.0.
 
-    The incident light has an angel :math:`{\theta=\pi/10}`.
+    The incident light has an angel *pi*/10.
 
     .. code-block:: python
 		  
@@ -79,9 +78,9 @@ Quick Start
 		     # setup RCWA
 		     obj = grcwa.obj(nG,L1,L2,freq,theta,phi,verbose=1)		    
 
-  * Geometry: the thicknesses of the four layers are 0.1,0.2,0.3, and 0.4. For patterned layers, we consider total grid points :math:`{N_x\times N_y = 100*100}` within the unit cell.
+  * Geometry: the thicknesses of the four layers are 0.1,0.2,0.3, and 0.4. For patterned layers, we consider total grid points *N*\ :sub:`x` \* *N*\ :sub:`y` = 100\*100 within the unit cell.
     
-  * Dielectric profile: the 0-th layer has uniform :math:`{\epsilon=2}`; the 1st layer has :math:`{\epsilon=4(1)}` in the orange (void) region; the 2nd layer has :math:`{\epsilon=6(1)}` in the bule (void) region; and the last layer has uniform :math:`{\epsilon=3}`.
+  * Dielectric constant: 2.0 for the 0-th layer; 4.0 (1.0) for the 1st layer in the orange (void) region; 6.0 (1.0) for the 2nd layer in the bule (void) region; and 3.0 for the last layer.
 
     .. code-block:: python
 
@@ -101,7 +100,7 @@ Quick Start
 
 		    obj.Init_Setup()
 
-  * Patterned layer: the 1-th layer a circular hole of radius :math:`{R=0.5\Lambda_x}`, and the 2-nd layer has a square hole of :math:`{a=0.5\Lambda_x}`.
+  * Patterned layer: the 1-th layer a circular hole of radius 0.5 *L*\ :sub:`x`, and the 2-nd layer has a square hole of 0.5 *L*\ :sub:`x`
   
     .. code-block:: python
 
