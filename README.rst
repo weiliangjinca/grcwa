@@ -59,7 +59,7 @@ Quick Start
 
   .. code-block:: console
 		  
-		  $pip install grcwa
+		  $ pip install grcwa
 
   Or,
 

@@ -1,16 +1,6 @@
 Welcome to grcwa's documentation!
 ======================================
 
-.. image:: https://img.shields.io/pypi/v/grcwa.svg
-        :target: https://pypi.python.org/pypi/grcwa
-
-.. image:: https://img.shields.io/travis/weiliangjinca/grcwa.svg
-        :target: https://travis-ci.org/weiliangjinca/grcwa
-
-.. image:: https://readthedocs.org/projects/grcwa/badge/?version=latest
-        :target: https://grcwa.readthedocs.io/en/latest/?badge=latest
-        :alt: Documentation Status
-
 grcwa (autoGradable RCWA) is a python implementation of rigorous
 coupled wave analysis (RCWA) for arbitrarily shaped photonic crystal
 slabs, supporting automatic differentation with autograd
