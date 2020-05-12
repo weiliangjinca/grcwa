@@ -5,7 +5,6 @@ from .kbloch import Lattice_Reciprocate,Lattice_getG,Lattice_SetKs
 class obj:
     def __init__(self,nG,L1,L2,freq,theta,phi,verbose=1):
         '''The time harmonic convention is exp(-i omega t), speed of light = 1
-        The first and last layer must be uniform
 
         Two kinds of layers are currently supported: uniform layer,
         patterned layer from grids. Interface for patterned layer by

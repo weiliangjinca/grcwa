@@ -6,4 +6,4 @@ from .rcwa import obj
 
 __author__ = """Weiliang Jin"""
 __email__ = 'jwlaaa@gmail.com'
-__version__ = '0.1.0'
+__version__ = '0.1'

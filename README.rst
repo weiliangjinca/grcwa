@@ -18,6 +18,21 @@ slabs, supporting automatic differentation with autograd
 * Free software: MIT license
 * Documentation: https://grcwa.readthedocs.io.
 
+Citing
+-------
+
+If you find **grcwa** useful for your research, please cite the
+following paper:
+::
+
+   @article{Jin2020,
+     title = {Inverse design of lightweight broadband  reflector for efficient lightsail propulsion},
+     author ={Jin, Weiliang and Li, Wei and Orenstein, Meir and Fan, Shanhui},
+     year = {2020},
+     journal = {arXiv:2005.04840},
+   }
+  
+
 Features
 ---------
 .. image:: imag/scheme.png
@@ -42,21 +57,26 @@ Quick Start
 -----------
 * Installation:
 
-  .. code-block:: python
+  .. code-block:: console
 		  
-		  pip install grcwa
+		  $pip install grcwa
 
-* A simple example:
-  
+  Or,
+
+  .. code-block:: console
+
+		  $ git clone git://github.com/weiliangjinca/grcwa
+		  $ pip install .
+
+* Example 1: transmission and reflection of a square lattice of a hole: `ex1.py <./example/ex1.py>`_
+
+* Example 2: Transmission and reflection of two patterned layers: `ex2.py <./example/ex2.py>`_, as illustrated in the figure below (only a **unit cell** is plotted)
+
   .. image:: imag/ex.png
+	     
+  * *Periodicity* in the lateral direction is  *L*\ :sub:`x` = *L*\ :sub:`y` = 0.2, and *frequency* is 1.0.
 
-  * As illustrated in the above figure, we consider two **patterned**
-    layers (only a **unit cell** is plotted) are sandwiched between two
-    uniform slabs.
-
-    *Periodicity* in the lateral direction is  *L*\ :sub:`x` = *L*\ :sub:`y` = 0.2, and *frequency* is 1.0.
-
-    The incident light has an angel *pi*/10.
+  * The incident light has an angel *pi*/10.
 
     .. code-block:: python
 		  
@@ -85,6 +105,8 @@ Quick Start
     .. code-block:: python
 
 		    Np = 2 # number of patterned layers
+		    Nx = 100
+		    Ny = 100
 		    
 		    thick0 = 0.1
 		    pthick = [0.2,0.3]
@@ -138,23 +160,15 @@ Quick Start
 		     obj.MakeExcitationPlanewave(planewave['p_amp'],planewave['p_phase'],planewave['s_amp'],planewave['s_phase'],order = 0)
 
 		     # solve for R and T
-		     R,T= obj.RT_Solve(normalize=0)
+		     R,T= obj.RT_Solve(normalize=1)
 
+* Example 3: topology optimization of reflection of a single patterned layer, `ex3.py <./example/ex3.py>`_
+  
+Note on conventions
+-------------------
 
-Citing
--------
-
-If you find **grcwa** useful for your research, please cite the
-following paper:
-::
-
-   @article{Jin2020,
-     title = {Inverse design of lightweight broadband  reflector for efficient lightsail propulsion},
-     author ={Jin, Weiliang and Li, Wei and Orenstein, Meir and Fan, Shanhui},
-     year = {2020},
-     journal = {arXiv:2005.04840},
-   }
-
+* The vacuum permittivity, permeability, and speed of light are *1*.
+* The time harmonic convention is *exp(-i omega t)*.
 
 Acknowledgements
 ----------------
@@ -171,6 +185,3 @@ styles follow their implementation in `legume
 <https://github.com/fancompute/legume>`_. Haiwen Wang and Cheng Guo
 provided useful feedback. Lastly, the template was credited to
 Cookiecutter_ and the `audreyr/cookiecutter-pypackage`_.
-
-.. _Cookiecutter: https://github.com/audreyr/cookiecutter
-.. _`audreyr/cookiecutter-pypackage`: https://github.com/audreyr/cookiecutter-pypackage
