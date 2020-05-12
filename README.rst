@@ -40,7 +40,7 @@ Quick Start
 		  
 		  pip install grcwa
 
-* Setup RCWA calucation
+* Setup RCWA calucation [TODO]
   
   ..
      .. code-block:: python
@@ -87,7 +87,7 @@ following paper:
      title = {Inverse design of lightweight broadband  reflector for efficient lightsail propulsion},
      author ={Jin, Weiliang and Li, Wei and Orenstein, Meir and Fan, Shanhui},
      year = {2020},
-     journal = {TODO},
+     journal = {arXiv:2005.04840},
    }
 
 
@@ -103,8 +103,8 @@ integrating **Autograd** into RCWA package rather than deriving
 adjoint-variable gradient by hand was inspired by a discussion with
 Dr. Ian Williamson and Dr. Momchil Minkov. The backend and many other
 styles follow their implementation in `legume
-<https://github.com/fancompute/legume>`_, Haiwen Wang and Cheng Guo
-provided useful feedback. Lastly, the template was created to
+<https://github.com/fancompute/legume>`_. Haiwen Wang and Cheng Guo
+provided useful feedback. Lastly, the template was credited to
 Cookiecutter_ and the `audreyr/cookiecutter-pypackage`_.
 
 .. _Cookiecutter: https://github.com/audreyr/cookiecutter
