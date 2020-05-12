@@ -373,6 +373,7 @@ slabs.</p>
 <li>Free software: MIT license</li>
 <li>Documentation: <a class="reference external" href="https://grcwa.readthedocs.io">https://grcwa.readthedocs.io</a>.</li>
 </ul>
+<img alt="imag/scheme.png" src="imag/scheme.png" style="width: 200px;" />
 <div class="section" id="features">
 <h1>Features</h1>
 <ul class="simple">
@@ -395,20 +396,38 @@ directions must be fixed).</li>
 <span class="name">pip</span> <span class="name">install</span> <span class="name">grcwa</span>
 </pre>
 </li>
-<li><p class="first">Setup RCWA calucation</p>
-<pre class="code python literal-block">
-<span class="keyword namespace">import</span> <span class="name namespace">grcwa</span>
-<span class="name">planewave</span><span class="operator">=</span><span class="punctuation">{</span><span class="literal string single">'p_amp'</span><span class="punctuation">:</span><span class="literal number integer">1</span><span class="punctuation">,</span><span class="literal string single">'s_amp'</span><span class="punctuation">:</span><span class="literal number integer">0</span><span class="punctuation">,</span><span class="literal string single">'p_phase'</span><span class="punctuation">:</span><span class="literal number integer">0</span><span class="punctuation">,</span><span class="literal string single">'s_phase'</span><span class="punctuation">:</span><span class="literal number integer">0</span><span class="punctuation">}</span>
-<span class="name">obj</span> <span class="operator">=</span> <span class="name">grcwa</span><span class="operator">.</span><span class="name">obj</span><span class="punctuation">(</span><span class="name">nG</span><span class="punctuation">,</span><span class="name">L1</span><span class="punctuation">,</span><span class="name">L2</span><span class="punctuation">,</span><span class="name">freq</span><span class="punctuation">,</span><span class="name">theta</span><span class="punctuation">,</span><span class="name">phi</span><span class="punctuation">,</span><span class="name">verbose</span><span class="operator">=</span><span class="literal number integer">1</span><span class="punctuation">)</span>
-<span class="name">obj</span><span class="operator">.</span><span class="name">Add_LayerUniform</span><span class="punctuation">(</span><span class="name">thick0</span><span class="punctuation">,</span><span class="name">epsuniform0</span><span class="punctuation">)</span>
-<span class="name">obj</span><span class="operator">.</span><span class="name">Add_LayerGrid</span><span class="punctuation">(</span><span class="name">pthick</span><span class="punctuation">[</span><span class="name">i</span><span class="punctuation">],</span><span class="name">Nx</span><span class="punctuation">,</span><span class="name">Ny</span><span class="punctuation">)</span>
-<span class="name">obj</span><span class="operator">.</span><span class="name">Add_LayerUniform</span><span class="punctuation">(</span><span class="name">thickN</span><span class="punctuation">,</span><span class="name">epsuniformN</span><span class="punctuation">)</span>
+<li><p class="first">Setup RCWA calucation [TODO]</p>
+<!-- .. code-block:: python
 
-<span class="name">obj</span><span class="operator">.</span><span class="name">Init_Setup</span><span class="punctuation">(</span><span class="name">Pscale</span><span class="operator">=</span><span class="name">Pscale</span><span class="punctuation">,</span><span class="name">Gmethod</span><span class="operator">=</span><span class="literal number integer">0</span><span class="punctuation">)</span>
-<span class="name">obj</span><span class="operator">.</span><span class="name">MakeExcitationPlanewave</span><span class="punctuation">(</span><span class="name">planewave</span><span class="punctuation">[</span><span class="literal string single">'p_amp'</span><span class="punctuation">],</span><span class="name">planewave</span><span class="punctuation">[</span><span class="literal string single">'p_phase'</span><span class="punctuation">],</span><span class="name">planewave</span><span class="punctuation">[</span><span class="literal string single">'s_amp'</span><span class="punctuation">],</span><span class="name">planewave</span><span class="punctuation">[</span><span class="literal string single">'s_phase'</span><span class="punctuation">],</span><span class="name">order</span> <span class="operator">=</span> <span class="literal number integer">0</span><span class="punctuation">)</span>
-<span class="name">obj</span><span class="operator">.</span><span class="name">GridLayer_geteps</span><span class="punctuation">(</span><span class="name">epgrid</span><span class="punctuation">)</span>
-<span class="name">R</span><span class="punctuation">,</span><span class="name">T</span><span class="operator">=</span> <span class="name">obj</span><span class="operator">.</span><span class="name">RT_Solve</span><span class="punctuation">(</span><span class="name">normalize</span><span class="operator">=</span><span class="literal number integer">0</span><span class="punctuation">)</span>
-</pre>
+                import grcwa
+                grcwa.set_backend('autograd') # if autograd needed
+
+
+                # lattice constants
+                L1 = [0.1,0]
+                L2 = [0,0.1]
+                # Truncation order (actual number might be smaller)
+                nG = 101
+                # frequency
+                freq = 1.
+                # angle
+                theta = 0.
+                phi = 0.
+
+                # setup RCWA
+                obj = grcwa.obj(nG,L1,L2,freq,theta,phi,verbose=1)
+
+
+                obj.Add_LayerUniform(thick0,epsuniform0)
+                obj.Add_LayerGrid(pthick[i],Nx,Ny)
+                obj.Add_LayerUniform(thickN,epsuniformN)
+
+                obj.Init_Setup(Pscale=Pscale,Gmethod=0)
+
+                planewave={'p_amp':1,'s_amp':0,'p_phase':0,'s_phase':0}
+                obj.MakeExcitationPlanewave(planewave['p_amp'],planewave['p_phase'],planewave['s_amp'],planewave['s_phase'],order = 0)
+                obj.GridLayer_geteps(epgrid)
+                R,T= obj.RT_Solve(normalize=0) -->
 </li>
 </ul>
 </div>
@@ -421,21 +440,21 @@ following paper:</p>
   title = {Inverse design of lightweight broadband  reflector for efficient lightsail propulsion},
   author ={Jin, Weiliang and Li, Wei and Orenstein, Meir and Fan, Shanhui},
   year = {2020},
-  journal = {TODO},
+  journal = {arXiv:2005.04840},
 }
 </pre>
 </div>
 <div class="section" id="acknowledgements">
 <h1>Acknowledgements</h1>
-<p>My implementation of RCWA receives helpful discussions from <a class="reference external" href="https://scholar.google.com/citations?user=3ZgzHLYAAAAJ&amp;hl=en">Dr. Zin
+<p>My implementation of RCWA received helpful discussions from <a class="reference external" href="https://scholar.google.com/citations?user=3ZgzHLYAAAAJ&amp;hl=en">Dr. Zin
 Lin</a>. Many
-details of implementations are referred to a RCWA package implemented
+details of implementations were referred to a RCWA package implemented
 in c called <a class="reference external" href="https://github.com/victorliu/S4">S4</a>. The idea of
 integrating <strong>Autograd</strong> into RCWA package rather than deriving
-adjoint-variable gradient by hand is inspired by a discussion with
+adjoint-variable gradient by hand was inspired by a discussion with
 Dr. Ian Williamson and Dr. Momchil Minkov. The backend and many other
-styles follow their implementation in <a class="reference external" href="https://github.com/fancompute/legume">legume</a>, Haiwen Wang and Cheng Guo
-provide useful feedback. Lastly, the template was created to
+styles follow their implementation in <a class="reference external" href="https://github.com/fancompute/legume">legume</a>. Haiwen Wang and Cheng Guo
+provided useful feedback. Lastly, the template was credited to
 <a class="reference external" href="https://github.com/audreyr/cookiecutter">Cookiecutter</a> and the <a class="reference external" href="https://github.com/audreyr/cookiecutter-pypackage">audreyr/cookiecutter-pypackage</a>.</p>
 </div>
 </div>

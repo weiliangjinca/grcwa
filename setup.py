@@ -38,7 +38,7 @@ setup(
         'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
     ],
-    description="Python implementation of rigorous coupled wave analysis, autograd supported for optimization purpose",
+    description="Rigorous coupled wave analysis supporting automatic differentation with autograd",
     install_requires=['numpy','autograd'],
     license="MIT license",
     long_description=readme + '\n\n' + history,
