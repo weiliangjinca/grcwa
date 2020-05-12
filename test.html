@@ -358,6 +358,286 @@ ul.auto-toc {
   list-style-type: none }
 
 </style>
+<style type="text/css">
+
+/*
+*   math2html: convert LaTeX equations to HTML output.
+*
+*   Copyright (C) 2009,2010 Alex Fernández
+*
+*   Released under the terms of the `2-Clause BSD license'_, in short:
+*   Copying and distribution of this file, with or without modification,
+*   are permitted in any medium without royalty provided the copyright
+*   notice and this notice are preserved.
+*   This file is offered as-is, without any warranty.
+*
+* .. _2-Clause BSD license: http://www.spdx.org/licenses/BSD-2-Clause
+*
+*   Based on eLyXer: convert LyX source files to HTML output.
+*   http://elyxer.nongnu.org/
+*/
+/* --end--
+* CSS file for LaTeX formulas.
+*/
+
+/* Formulas */
+.formula {
+	text-align: center;
+	font-family: "Droid Serif", "DejaVu Serif", "STIX", serif;
+	margin: 1.2em 0;
+}
+span.formula {
+	white-space: nowrap;
+}
+div.formula {
+	padding: 0.5ex;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+/* Basic features */
+a.eqnumber {
+	display: inline-block;
+	float: right;
+	clear: right;
+	font-weight: bold;
+}
+span.unknown {
+	color: #800000;
+}
+span.ignored, span.arraydef {
+	display: none;
+}
+.formula i {
+	letter-spacing: 0.1ex;
+}
+
+/* Alignment */
+.align-left, .align-l {
+	text-align: left;
+}
+.align-right, .align-r {
+	text-align: right;
+}
+.align-center, .align-c {
+	text-align: center;
+}
+
+/* Structures */
+span.overline, span.bar {
+	text-decoration: overline;
+}
+.fraction, .fullfraction {
+	display: inline-block;
+	vertical-align: middle;
+	text-align: center;
+}
+.fraction .fraction {
+	font-size: 80%;
+	line-height: 100%;
+}
+span.numerator {
+	display: block;
+}
+span.denominator {
+	display: block;
+	padding: 0ex;
+	border-top: thin solid;
+}
+sup.numerator, sup.unit {
+	font-size: 70%;
+	vertical-align: 80%;
+}
+sub.denominator, sub.unit {
+	font-size: 70%;
+	vertical-align: -20%;
+}
+span.sqrt {
+	display: inline-block;
+	vertical-align: middle;
+	padding: 0.1ex;
+}
+sup.root {
+	font-size: 70%;
+	position: relative;
+	left: 1.4ex;
+}
+span.radical {
+	display: inline-block;
+	padding: 0ex;
+	font-size: 150%;
+	vertical-align: top;
+}
+span.root {
+	display: inline-block;
+	border-top: thin solid;
+	padding: 0ex;
+	vertical-align: middle;
+}
+span.symbol {
+	line-height: 125%;
+	font-size: 125%;
+}
+span.bigsymbol {
+	line-height: 150%;
+	font-size: 150%;
+}
+span.largesymbol {
+	font-size: 175%;
+}
+span.hugesymbol {
+	font-size: 200%;
+}
+span.scripts {
+	display: inline-table;
+	vertical-align: middle;
+}
+.script {
+	display: table-row;
+	text-align: left;
+	line-height: 150%;
+}
+span.limits {
+	display: inline-table;
+	vertical-align: middle;
+}
+.limit {
+	display: table-row;
+	line-height: 99%;
+}
+sup.limit, sub.limit {
+	line-height: 100%;
+}
+span.symbolover {
+	display: inline-block;
+	text-align: center;
+	position: relative;
+	float: right;
+	right: 100%;
+	bottom: 0.5em;
+	width: 0px;
+}
+span.withsymbol {
+	display: inline-block;
+}
+span.symbolunder {
+	display: inline-block;
+	text-align: center;
+	position: relative;
+	float: right;
+	right: 80%;
+	top: 0.3em;
+	width: 0px;
+}
+
+/* Environments */
+span.array, span.bracketcases, span.binomial, span.environment {
+	display: inline-table;
+	text-align: center;
+	border-collapse: collapse;
+	margin: 0em;
+	vertical-align: middle;
+}
+span.arrayrow, span.binomrow {
+	display: table-row;
+	padding: 0ex;
+	border: 0ex;
+}
+span.arraycell, span.bracket, span.case, span.binomcell, span.environmentcell {
+	display: table-cell;
+	padding: 0ex 0.2ex;
+	line-height: 99%;
+	border: 0ex;
+}
+/*
+* CSS file for LaTeX formulas, extra stuff:
+* binomials, vertical braces, stackrel, fonts and colors.
+*/
+
+/* Inline binomials */
+span.binom {
+	display: inline-block;
+	vertical-align: middle;
+	text-align: center;
+	font-size: 80%;
+}
+span.binomstack {
+	display: block;
+	padding: 0em;
+}
+
+/* Over- and underbraces */
+span.overbrace {
+	border-top: 2pt solid;
+}
+span.underbrace {
+	border-bottom: 2pt solid;
+}
+
+/* Stackrel */
+span.stackrel {
+	display: inline-block;
+	text-align: center;
+}
+span.upstackrel {
+	display: block;
+	padding: 0em;
+	font-size: 80%;
+	line-height: 64%;
+	position: relative;
+	top: 0.15em;
+
+}
+span.downstackrel {
+	display: block;
+	vertical-align: bottom;
+	padding: 0em;
+}
+
+/* Fonts */
+span.mathsf, span.textsf {
+	font-style: normal;
+	font-family: sans-serif;
+}
+span.mathrm, span.textrm {
+	font-style: normal;
+	font-family: serif;
+}
+span.text, span.textnormal {
+	font-style: normal;
+}
+span.textipa {
+	color: #008080;
+}
+span.fraktur {
+	font-family: "Lucida Blackletter", eufm10, blackletter;
+}
+span.blackboard {
+	font-family: Blackboard, msbm10, serif;
+}
+span.scriptfont {
+	font-family: "Monotype Corsiva", "Apple Chancery", "URW Chancery L", cursive;
+	font-style: italic;
+}
+
+/* Colors */
+span.colorbox {
+	display: inline-block;
+	padding: 5px;
+}
+span.fbox {
+	display: inline-block;
+	border: thin solid black;
+	padding: 2px;
+}
+span.boxed, span.framebox {
+	display: inline-block;
+	border: thin solid black;
+	padding: 5px;
+}
+
+
+</style>
 </head>
 <body>
 <div class="document" id="grcwa">
@@ -375,7 +655,7 @@ slabs, supporting automatic differentation with autograd</p>
 </ul>
 <div class="section" id="features">
 <h1>Features</h1>
-<img alt="imag/scheme.png" src="imag/scheme.png" style="width: 200px;" />
+<img alt="imag/scheme.png" src="imag/scheme.png" />
 <p>RCWA solves EM-scattering problems of stacked photonic crystal
 slabs. As illustrated in the above figure, the photonic structure can
 have <em>N</em> layers of different thicknesses and independent spatial
@@ -402,38 +682,93 @@ directions must be fixed).</li>
 </pre>
 </li>
 <li><p class="first">A simple example:</p>
-<img alt="imag/ex.png" src="imag/ex.png" style="width: 200px;" />
-<!-- .. code-block:: python
+<img alt="imag/ex.png" src="imag/ex.png" />
+<ul>
+<li><p class="first">As illustrated in the above figure, we consider two <strong>patterned</strong>
+layers (only a <strong>unit cell</strong> is plotted) are sandwiched between two
+uniform slabs.</p>
+<p><em>Periodicity</em> in the lateral direction is <span class="formula">Λ<sub><i>x</i></sub> = Λ<sub><i>y</i></sub> = 0.2</span>, and <em>frequency</em> is 1.0.</p>
+<p>The incident light has an angel <span class="formula"><i>θ</i> = <i>π</i> ⁄ 10</span>.</p>
+<pre class="code python literal-block">
+<span class="keyword namespace">import</span> <span class="name namespace">grcwa</span>
+<span class="keyword namespace">import</span> <span class="name namespace">numpy</span> <span class="keyword namespace">as</span> <span class="name namespace">np</span>
+<span class="name">grcwa</span><span class="operator">.</span><span class="name">set_backend</span><span class="punctuation">(</span><span class="literal string single">'autograd'</span><span class="punctuation">)</span> <span class="comment single"># if autograd needed</span>
 
-                import grcwa
-                grcwa.set_backend('autograd') # if autograd needed
+ <span class="comment single"># lattice constants</span>
+ <span class="name">L1</span> <span class="operator">=</span> <span class="punctuation">[</span><span class="literal number float">0.2</span><span class="punctuation">,</span><span class="literal number integer">0</span><span class="punctuation">]</span>
+ <span class="name">L2</span> <span class="operator">=</span> <span class="punctuation">[</span><span class="literal number integer">0</span><span class="punctuation">,</span><span class="literal number float">0.2</span><span class="punctuation">]</span>
+ <span class="comment single"># Truncation order (actual number might be smaller)</span>
+ <span class="name">nG</span> <span class="operator">=</span> <span class="literal number integer">101</span>
+ <span class="comment single"># frequency</span>
+ <span class="name">freq</span> <span class="operator">=</span> <span class="literal number float">1.</span>
+ <span class="comment single"># angle</span>
+ <span class="name">theta</span> <span class="operator">=</span> <span class="name">np</span><span class="operator">.</span><span class="name">pi</span><span class="operator">/</span><span class="literal number integer">10</span>
+ <span class="name">phi</span> <span class="operator">=</span> <span class="literal number float">0.</span>
 
+ <span class="comment single"># setup RCWA</span>
+ <span class="name">obj</span> <span class="operator">=</span> <span class="name">grcwa</span><span class="operator">.</span><span class="name">obj</span><span class="punctuation">(</span><span class="name">nG</span><span class="punctuation">,</span><span class="name">L1</span><span class="punctuation">,</span><span class="name">L2</span><span class="punctuation">,</span><span class="name">freq</span><span class="punctuation">,</span><span class="name">theta</span><span class="punctuation">,</span><span class="name">phi</span><span class="punctuation">,</span><span class="name">verbose</span><span class="operator">=</span><span class="literal number integer">1</span><span class="punctuation">)</span>
+</pre>
+</li>
+<li><p class="first">Geometry: the thicknesses of the four layers are 0.1,0.2,0.3, and 0.4. For patterned layers, we consider total grid points <span class="formula"><i>N</i><sub><i>x</i></sub> × <i>N</i><sub><i>y</i></sub> = 100*100</span> within the unit cell.</p>
+</li>
+<li><p class="first">Dielectric profile: the 0-th layer has uniform <span class="formula"><i>ϵ</i> = 2</span>; the 1st layer has <span class="formula"><i>ϵ</i> = 4(1)</span> in the orange (void) region; the 2nd layer has <span class="formula"><i>ϵ</i> = 6(1)</span> in the bule (void) region; and the last layer has uniform <span class="formula"><i>ϵ</i> = 3</span>.</p>
+<pre class="code python literal-block">
+<span class="name">Np</span> <span class="operator">=</span> <span class="literal number integer">2</span> <span class="comment single"># number of patterned layers</span>
 
-                # lattice constants
-                L1 = [0.1,0]
-                L2 = [0,0.1]
-                # Truncation order (actual number might be smaller)
-                nG = 101
-                # frequency
-                freq = 1.
-                # angle
-                theta = 0.
-                phi = 0.
+<span class="name">thick0</span> <span class="operator">=</span> <span class="literal number float">0.1</span>
+<span class="name">pthick</span> <span class="operator">=</span> <span class="punctuation">[</span><span class="literal number float">0.2</span><span class="punctuation">,</span><span class="literal number float">0.3</span><span class="punctuation">]</span>
+<span class="name">thickN</span> <span class="operator">=</span> <span class="literal number float">0.4</span>
 
-                # setup RCWA
-                obj = grcwa.obj(nG,L1,L2,freq,theta,phi,verbose=1)
+<span class="name">ep0</span> <span class="operator">=</span> <span class="literal number float">2.</span>
+<span class="name">epN</span> <span class="operator">=</span> <span class="literal number float">3.</span>
 
+<span class="name">obj</span><span class="operator">.</span><span class="name">Add_LayerUniform</span><span class="punctuation">(</span><span class="name">thick0</span><span class="punctuation">,</span><span class="name">ep0</span><span class="punctuation">)</span>
+<span class="keyword">for</span> <span class="name">i</span> <span class="operator word">in</span> <span class="name builtin">range</span><span class="punctuation">(</span><span class="name">Np</span><span class="punctuation">):</span>
+    <span class="name">obj</span><span class="operator">.</span><span class="name">Add_LayerGrid</span><span class="punctuation">(</span><span class="name">pthick</span><span class="punctuation">[</span><span class="name">i</span><span class="punctuation">],</span><span class="name">Nx</span><span class="punctuation">,</span><span class="name">Ny</span><span class="punctuation">)</span>
+<span class="name">obj</span><span class="operator">.</span><span class="name">Add_LayerUniform</span><span class="punctuation">(</span><span class="name">thickN</span><span class="punctuation">,</span><span class="name">epN</span><span class="punctuation">)</span>
 
-                obj.Add_LayerUniform(thick0,epsuniform0)
-                obj.Add_LayerGrid(pthick[i],Nx,Ny)
-                obj.Add_LayerUniform(thickN,epsuniformN)
+<span class="name">obj</span><span class="operator">.</span><span class="name">Init_Setup</span><span class="punctuation">()</span>
+</pre>
+</li>
+<li><p class="first">Patterned layer: the 1-th layer a circular hole of radius <span class="formula"><i>R</i> = 0.5Λ<sub><i>x</i></sub></span>, and the 2-nd layer has a square hole of <span class="formula"><i>a</i> = 0.5Λ<sub><i>x</i></sub></span>.</p>
+<pre class="code python literal-block">
+<span class="name">radius</span> <span class="operator">=</span> <span class="literal number float">0.5</span>
+<span class="name">a</span> <span class="operator">=</span> <span class="literal number float">0.5</span>
 
-                obj.Init_Setup(Pscale=Pscale,Gmethod=0)
+<span class="name">ep1</span> <span class="operator">=</span> <span class="literal number float">4.</span>
+<span class="name">ep2</span> <span class="operator">=</span> <span class="literal number float">6.</span>
+<span class="name">epbkg</span> <span class="operator">=</span> <span class="literal number float">1.</span>
 
-                planewave={'p_amp':1,'s_amp':0,'p_phase':0,'s_phase':0}
-                obj.MakeExcitationPlanewave(planewave['p_amp'],planewave['p_phase'],planewave['s_amp'],planewave['s_phase'],order = 0)
-                obj.GridLayer_geteps(epgrid)
-                R,T= obj.RT_Solve(normalize=0) -->
+<span class="comment single"># coordinate</span>
+<span class="name">x0</span> <span class="operator">=</span> <span class="name">np</span><span class="operator">.</span><span class="name">linspace</span><span class="punctuation">(</span><span class="literal number integer">0</span><span class="punctuation">,</span><span class="literal number float">1.</span><span class="punctuation">,</span><span class="name">Nx</span><span class="punctuation">)</span>
+<span class="name">y0</span> <span class="operator">=</span> <span class="name">np</span><span class="operator">.</span><span class="name">linspace</span><span class="punctuation">(</span><span class="literal number integer">0</span><span class="punctuation">,</span><span class="literal number float">1.</span><span class="punctuation">,</span><span class="name">Ny</span><span class="punctuation">)</span>
+<span class="name">x</span><span class="punctuation">,</span> <span class="name">y</span> <span class="operator">=</span> <span class="name">np</span><span class="operator">.</span><span class="name">meshgrid</span><span class="punctuation">(</span><span class="name">x0</span><span class="punctuation">,</span><span class="name">y0</span><span class="punctuation">,</span><span class="name">indexing</span><span class="operator">=</span><span class="literal string single">'ij'</span><span class="punctuation">)</span>
+
+<span class="comment single"># layer 1</span>
+<span class="name">epgrid1</span> <span class="operator">=</span> <span class="name">np</span><span class="operator">.</span><span class="name">ones</span><span class="punctuation">((</span><span class="name">Nx</span><span class="punctuation">,</span><span class="name">Ny</span><span class="punctuation">))</span><span class="operator">*</span><span class="name">ep1</span>
+<span class="name">ind</span> <span class="operator">=</span> <span class="punctuation">(</span><span class="name">x</span><span class="operator">-.</span><span class="literal number integer">5</span><span class="punctuation">)</span><span class="operator">**</span><span class="literal number integer">2</span><span class="operator">+</span><span class="punctuation">(</span><span class="name">y</span><span class="operator">-.</span><span class="literal number integer">5</span><span class="punctuation">)</span><span class="operator">**</span><span class="literal number integer">2</span><span class="operator">&lt;</span><span class="name">radius</span><span class="operator">**</span><span class="literal number integer">2</span>
+<span class="name">epgrid1</span><span class="punctuation">[</span><span class="name">ind</span><span class="punctuation">]</span><span class="operator">=</span><span class="name">epbkg</span>
+
+<span class="comment single"># layer 2</span>
+<span class="name">epgrid2</span> <span class="operator">=</span> <span class="name">np</span><span class="operator">.</span><span class="name">ones</span><span class="punctuation">((</span><span class="name">Nx</span><span class="punctuation">,</span><span class="name">Ny</span><span class="punctuation">))</span><span class="operator">*</span><span class="name">ep2</span>
+<span class="name">ind</span> <span class="operator">=</span> <span class="name">np</span><span class="operator">.</span><span class="name">logical_and</span><span class="punctuation">(</span><span class="name">np</span><span class="operator">.</span><span class="name">abs</span><span class="punctuation">(</span><span class="name">x</span><span class="operator">-.</span><span class="literal number integer">5</span><span class="punctuation">)</span><span class="operator">&lt;</span><span class="name">a</span><span class="operator">/</span><span class="literal number integer">2</span> <span class="operator word">and</span> <span class="name">np</span><span class="operator">.</span><span class="name">abs</span><span class="punctuation">(</span><span class="name">y</span><span class="operator">-.</span><span class="literal number integer">5</span><span class="punctuation">)</span><span class="operator">&lt;</span><span class="name">a</span><span class="operator">/</span><span class="literal number integer">2</span><span class="punctuation">))</span>
+<span class="name">epgrid2</span><span class="punctuation">[</span><span class="name">ind</span><span class="punctuation">]</span><span class="operator">=</span><span class="name">epbkg</span>
+
+<span class="comment single"># combine epsilon of all layers</span>
+<span class="name">epgrid</span> <span class="operator">=</span> <span class="name">np</span><span class="operator">.</span><span class="name">concatenate</span><span class="punctuation">((</span><span class="name">epgrid1</span><span class="operator">.</span><span class="name">flatten</span><span class="punctuation">(),</span><span class="name">epgrid2</span><span class="operator">.</span><span class="name">flatten</span><span class="punctuation">()))</span>
+<span class="name">obj</span><span class="operator">.</span><span class="name">GridLayer_geteps</span><span class="punctuation">(</span><span class="name">epgrid</span><span class="punctuation">)</span>
+</pre>
+</li>
+<li><p class="first">Incident light is <em>s</em>-polarized</p>
+<pre class="code python literal-block">
+<span class="name">planewave</span><span class="operator">=</span><span class="punctuation">{</span><span class="literal string single">'p_amp'</span><span class="punctuation">:</span><span class="literal number integer">0</span><span class="punctuation">,</span><span class="literal string single">'s_amp'</span><span class="punctuation">:</span><span class="literal number integer">1</span><span class="punctuation">,</span><span class="literal string single">'p_phase'</span><span class="punctuation">:</span><span class="literal number integer">0</span><span class="punctuation">,</span><span class="literal string single">'s_phase'</span><span class="punctuation">:</span><span class="literal number integer">0</span><span class="punctuation">}</span>
+<span class="name">obj</span><span class="operator">.</span><span class="name">MakeExcitationPlanewave</span><span class="punctuation">(</span><span class="name">planewave</span><span class="punctuation">[</span><span class="literal string single">'p_amp'</span><span class="punctuation">],</span><span class="name">planewave</span><span class="punctuation">[</span><span class="literal string single">'p_phase'</span><span class="punctuation">],</span><span class="name">planewave</span><span class="punctuation">[</span><span class="literal string single">'s_amp'</span><span class="punctuation">],</span><span class="name">planewave</span><span class="punctuation">[</span><span class="literal string single">'s_phase'</span><span class="punctuation">],</span><span class="name">order</span> <span class="operator">=</span> <span class="literal number integer">0</span><span class="punctuation">)</span>
+
+<span class="comment single"># solve for R and T</span>
+<span class="name">R</span><span class="punctuation">,</span><span class="name">T</span><span class="operator">=</span> <span class="name">obj</span><span class="operator">.</span><span class="name">RT_Solve</span><span class="punctuation">(</span><span class="name">normalize</span><span class="operator">=</span><span class="literal number integer">0</span><span class="punctuation">)</span>
+</pre>
+</li>
+</ul>
 </li>
 </ul>
 </div>
