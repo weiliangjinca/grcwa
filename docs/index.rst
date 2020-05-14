@@ -44,8 +44,8 @@ directions, and invariant along the vertical direction.
 
    readme
    installation
-   convention
    usage
+   convention   
    contributing
    authors
    history

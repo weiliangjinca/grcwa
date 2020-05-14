@@ -3,21 +3,24 @@ import grcwa
 import numpy as np
 
 # Truncation order (actual number might be smaller)
-nG = 101
+nG = 301
 # lattice constants
-L1 = [0.2,0]
-L2 = [0,0.2]
+L1 = [1.5,0]
+L2 = [0,1.5]
 # frequency and angles
 freq = 1.
 theta = 0.
 phi = 0.
+# to avoid singular matrix, alternatively, one can add fictitious small loss to vacuum
+Qabs = np.inf
+freqcmp = freq*(1+1j/2/Qabs)
 # the patterned layer has a griding: Nx*Ny
-Nx = 100
-Ny = 100
+Nx = 400
+Ny = 400
 
 # now consider 3 layers: vacuum + patterned + vacuum
 ep0 = 1. # dielectric for layer 1 (uniform)
-epp = 10. # dielectric for patterned layer
+epp = 4. # dielectric for patterned layer
 epbkg = 1. # dielectric for holes in the patterned layer 
 epN = 1.  # dielectric for layer N (uniform)
 
@@ -26,7 +29,7 @@ thickp = 0.2 # thickness of patterned layer
 thickN = 1.
 
 # eps for patterned layer
-radius = 0.4
+radius = 0.3
 epgrid = np.ones((Nx,Ny),dtype=float)*epp
 x0 = np.linspace(0,1.,Nx)
 y0 = np.linspace(0,1.,Ny)
@@ -35,7 +38,7 @@ sphere = (x-.5)**2+(y-.5)**2<radius**2
 epgrid[sphere] = epbkg
 
 ######### setting up RCWA
-obj = grcwa.obj(nG,L1,L2,freq,theta,phi,verbose=1)
+obj = grcwa.obj(nG,L1,L2,freqcmp,theta,phi,verbose=1)
 # input layer information
 obj.Add_LayerUniform(thick0,ep0)
 obj.Add_LayerGrid(thickp,Nx,Ny)
@@ -50,5 +53,8 @@ obj.GridLayer_geteps(epgrid.flatten())
 
 # compute reflection and transmission
 R,T= obj.RT_Solve(normalize=1)
-
 print('R=',R,', T=',T,', R+T=',R+T)
+
+# compute reflection and transmission
+# Ri(Ti) has length obj.nG, too see which order, check obj.G; too see which kx,ky, check obj.kx obj.ky
+Ri,Ti= obj.RT_Solve(normalize=1,byorder=1)

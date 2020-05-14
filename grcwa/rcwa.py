@@ -186,7 +186,7 @@ class obj:
             ptr += Nx*Ny
             ptri += 1            
 
-    def RT_Solve(self,normalize = 0):
+    def RT_Solve(self,normalize = 0, byorder = 0):
         '''
         Reflection and transmission power computation
         Returns 2R and 2T, following Victor's notation
@@ -195,8 +195,8 @@ class obj:
         if normalize = 1, it will be divided by n[0]*cos(theta)
         '''
         aN, b0 = SolveExterior(self.a0,self.bN,self.q_list,self.phi_list,self.kp_list,self.thickness_list)
-        fi,bi = GetZPoyntingFlux(self.a0,b0,self.omega,self.kp_list[0],self.phi_list[0],self.q_list[0])
-        fe,be = GetZPoyntingFlux(aN,self.bN,self.omega,self.kp_list[-1],self.phi_list[-1],self.q_list[-1])
+        fi,bi = GetZPoyntingFlux(self.a0,b0,self.omega,self.kp_list[0],self.phi_list[0],self.q_list[0],byorder=byorder)
+        fe,be = GetZPoyntingFlux(aN,self.bN,self.omega,self.kp_list[-1],self.phi_list[-1],self.q_list[-1],byorder=byorder)
 
         if self.direction == 'forward':
             R = bd.real(-bi)
@@ -507,11 +507,13 @@ def TranslateAmplitudes(q,thickness,dz,ai,bi):
     return ai,bi
         
 
-def GetZPoyntingFlux(ai,bi,omega,kp,phi,q):
+def GetZPoyntingFlux(ai,bi,omega,kp,phi,q,byorder=0):
     '''
      Returns 2S_z/A, following Victor's notation
      Maybe because 2* makes S_z = 1 for H=1 in vacuum
     '''
+    n2 = len(ai)
+    n = int(n2/2)
     # A = kp phi inv(omega*q)
     A = bd.dot(bd.dot(kp,phi),  bd.diag(1./omega/q))
 
@@ -521,10 +523,16 @@ def GetZPoyntingFlux(ai,bi,omega,kp,phi,q):
     Ab = bd.dot(A,bi)
 
     # diff = 0.5*(pb* Aa - Ab* pa)
-    diff = 0.5*bd.sum(bd.conj(pb)*Aa-bd.conj(Ab)*pa)
+    diff = 0.5*(bd.conj(pb)*Aa-bd.conj(Ab)*pa)
     #forward = real(Aa* pa) + diff
-    forward = bd.real(bd.sum(bd.conj(Aa)*pa)) + diff
-    backward = -bd.real(bd.sum(bd.conj(Ab)*pb)) + bd.conj(diff)
+    forward_xy = bd.real(bd.conj(Aa)*pa) + diff
+    backward_xy = -bd.real(bd.conj(Ab)*pb) + bd.conj(diff)
+
+    forward = forward_xy[:n] + forward_xy[n:]
+    backward = backward_xy[:n] + backward_xy[n:]
+    if byorder == 0:
+        forward = bd.sum(forward)
+        backward = bd.sum(backward)
 
     return forward, backward
 

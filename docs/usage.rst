@@ -26,14 +26,6 @@ To feed the epsilon profile for patterned layer::
 
   # x is a 1D array: np.concatenate((epgrid1.flatten(),epgrid2.flatten(),...))
   obj.GridLayer_geteps(x)
-  
-To define planewave excitation::
-
-  obj.MakeExcitationPlanewave(p_amp,p_phase,s_amp,s_phase,order = 0)
-  
-To normalize output when the 0-th media is not vacuum, or for oblique incidence::
-  
-  R, T = RT_Solve(self,normalize = 1)
 
 To scale the periodicity in the both lateral directions simultaneously (as an autogradable parameter)::
 
@@ -43,10 +35,22 @@ Fourier space truncation options ::
 
   obj.Init_Setup(Gmethod=0) # 0 for circular, 1 for rectangular
 
+To define planewave excitation::
+
+  obj.MakeExcitationPlanewave(p_amp,p_phase,s_amp,s_phase,order = 0)
+
 To define incidence light other than planewave::
 
   obj.a0 = ... # forward
   obj.bN = ... # backward, each have a length 2*obj.nG, for the 2 lateral directions
+  
+To normalize output when the 0-th media is not vacuum, or for oblique incidence::
+  
+  R, T = obj.RT_Solve(normalize = 1)
+
+To get Poynting flux by order::
+  
+  Ri, Ti = obj.RT_Solve(byorder=1) # Ri(Ti) has length obj.nG, too see which order, check obj.G; too see which kx,ky, check obj.kx obj.ky
 
 To get amplitude of eigenvectors at some layer at some zoffset ::
 
@@ -57,6 +61,10 @@ To get Fourier amplitude of fields at some layer at some zoffset ::
 
   E,H = obj.Solve_FieldFourier(which_layer,z_offset) #E = [Ex,Ey,Ez], H = [Hx,Hy,Hz]
 
+To get fields in real space on grid points ::
+  
+  E,H = obj.Solve_FieldOnGrid(which_layer,z_offset) # #E = [Ex,Ey,Ez], H = [Hx,Hy,Hz]
+  
 To get volume integration with respect to some convolution matrix *M* defined for 3 directions, respectively::
   
   val = obj.Volume_integral(which_layer,Mx,My,Mz,normalize=1)
