@@ -55,6 +55,6 @@ obj.GridLayer_geteps(epgrid.flatten())
 R,T= obj.RT_Solve(normalize=1)
 print('R=',R,', T=',T,', R+T=',R+T)
 
-# compute reflection and transmission
+# compute reflection and transmission by order
 # Ri(Ti) has length obj.nG, too see which order, check obj.G; too see which kx,ky, check obj.kx obj.ky
 Ri,Ti= obj.RT_Solve(normalize=1,byorder=1)
