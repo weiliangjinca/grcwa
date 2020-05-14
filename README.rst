@@ -69,7 +69,7 @@ Quick Start
 		  $ pip install grcwa
 
 
-* Example 1: transmission and reflection of a square lattice of a hole: `ex1.py <./example/ex1.py>`_
+* Example 1: transmission and reflection (sum or by order) of a square lattice of a hole: `ex1.py <./example/ex1.py>`_
 
 * Example 2: Transmission and reflection of two patterned layers: `ex2.py <./example/ex2.py>`_, as illustrated in the figure below (only a **unit cell** is plotted)
 
