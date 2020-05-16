@@ -4,8 +4,9 @@ grcwa
 .. image:: https://img.shields.io/pypi/v/grcwa.svg
         :target: https://pypi.python.org/pypi/grcwa
 
-.. image:: https://img.shields.io/travis/weiliangjinca/grcwa.svg
-        :target: https://travis-ci.org/weiliangjinca/grcwa
+..
+   .. image:: https://img.shields.io/travis/weiliangjinca/grcwa.svg
+	   :target: https://travis-ci.org/weiliangjinca/grcwa
 
 .. image:: https://readthedocs.org/projects/grcwa/badge/?version=latest
         :target: https://grcwa.readthedocs.io/en/latest/?badge=latest
@@ -58,15 +59,15 @@ Quick Start
 * Installation:
 
   .. code-block:: console
+		  
+		  $ pip install grcwa
+
+  Or,
+
+  .. code-block:: console
 
 		  $ git clone git://github.com/weiliangjinca/grcwa
 		  $ pip install .
-
-  Or, (not yet)
-  
-  .. code-block:: console
-		  
-		  $ pip install grcwa
 
 
 * Example 1: transmission and reflection (sum or by order) of a square lattice of a hole: `ex1.py <./example/ex1.py>`_
