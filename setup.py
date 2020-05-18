@@ -28,7 +28,7 @@ setup(
     author_email='jwlaaa@gmail.com',
     python_requires='>=3.5',
     classifiers=[
-        'License :: OSI Approved :: MIT License',
+        'License :: OSI Approved :: GPL License',
         'Natural Language :: English',
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.5',
@@ -38,7 +38,7 @@ setup(
     ],
     description="Rigorous coupled wave analysis supporting automatic differentation with autograd",
     install_requires=['autograd','numpy'],
-    license="MIT license",
+    license="GPL license",
     long_description=readme + '\n\n' + history,
     include_package_data=True,
     keywords='grcwa',
