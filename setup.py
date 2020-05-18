@@ -28,7 +28,7 @@ setup(
     author_email='jwlaaa@gmail.com',
     python_requires='>=3.5',
     classifiers=[
-        'License :: OSI Approved :: GPL License',
+        'License :: OSI Approved :: GNU General Public License v3 (GPLv3)',
         'Natural Language :: English',
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.5',
