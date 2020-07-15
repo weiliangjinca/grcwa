@@ -59,7 +59,7 @@ To get amplitude of eigenvectors at some layer at some zoffset ::
 
 To get real-space epsilon profile reconstructured from the truncated Fourier orders ::
   
-  ep = Return_eps(self,which_layer,Nx,Ny,component='xx') # For patterned layer component = 'xx','xy','yx','yy','zz'; For uniform layer, currently it's assumed to be isotropic        
+  ep = obj.Return_eps(which_layer,Nx,Ny,component='xx') # For patterned layer component = 'xx','xy','yx','yy','zz'; For uniform layer, currently it's assumed to be isotropic        
         
 To get Fourier amplitude of fields at some layer at some zoffset ::
 
