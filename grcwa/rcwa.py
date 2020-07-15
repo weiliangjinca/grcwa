@@ -186,6 +186,33 @@ class obj:
             ptr += Nx*Ny
             ptri += 1            
 
+    def Return_eps(self,which_layer,Nx,Ny,component='xx'):
+        '''
+        For patterned layer component = 'xx','xy','yx','yy','zz'
+        For uniform layer, currently it's assumed to be isotropic
+        '''
+        i = which_layer
+        # uniform layer
+        if self.id_list[i][0] == 0:
+            ep = self.Uniform_ep_list[self.id_list[i][2]]
+            return bd.ones((Nx,Ny))*ep
+
+        # patterned layer
+        elif self.id_list[i][0] == 1:
+            if component == 'zz':
+                epk = bd.inv(self.Patterned_epinv_list[self.id_list[i][2]])
+            elif component == 'xx':
+                epk = self.Patterned_ep2_list[self.id_list[i][2]][:self.nG,:self.nG]
+            elif component == 'xy':
+                epk = self.Patterned_ep2_list[self.id_list[i][2]][:self.nG,self.nG:]
+            elif component == 'yx':
+                epk = self.Patterned_ep2_list[self.id_list[i][2]][self.nG:,:self.nG]
+            elif component == 'yy':
+                epk = self.Patterned_ep2_list[self.id_list[i][2]][self.nG:,self.nG:]
+                
+            return get_ifft(Nx,Ny,epk[0,:],self.G)
+
+            
     def RT_Solve(self,normalize = 0, byorder = 0):
         '''
         Reflection and transmission power computation
