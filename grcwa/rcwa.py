@@ -169,7 +169,10 @@ class obj:
             Ny = self.GridLayer_Nxy_list[ptri][1]
             dN = 1./Nx/Ny
 
-            ep_grid = bd.reshape(ep_all[ptr:ptr+Nx*Ny],[Nx,Ny])
+            if len(ep_all) == 3 and ep_all[0].ndim>0:
+                ep_grid = [bd.reshape(ep_all[0][ptr:ptr+Nx*Ny],[Nx,Ny]),bd.reshape(ep_all[1][ptr:ptr+Nx*Ny],[Nx,Ny]),bd.reshape(ep_all[2][ptr:ptr+Nx*Ny],[Nx,Ny])]
+            else:
+                ep_grid = bd.reshape(ep_all[ptr:ptr+Nx*Ny],[Nx,Ny])
             
             epinv, ep2 = Epsilon_fft(dN,ep_grid,self.G)
 
