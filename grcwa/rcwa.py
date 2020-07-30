@@ -249,7 +249,7 @@ class obj:
             ai = self.a0
             bi = b0
 
-        elif which_layer == self.Layer_N:
+        elif which_layer == self.Layer_N-1:
             aN, b0 = SolveExterior(self.a0,self.bN,self.q_list,self.phi_list,self.kp_list,self.thickness_list)
             ai = aN
             bi = self.bN
