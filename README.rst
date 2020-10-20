@@ -27,10 +27,15 @@ following paper:
 ::
 
    @article{Jin2020,
-     title = {Inverse design of lightweight broadband  reflector for efficient lightsail propulsion},
+     title = {Inverse design of lightweight broadband reflector for relativistic lightsail propulsion},
      author ={Jin, Weiliang and Li, Wei and Orenstein, Meir and Fan, Shanhui},
      year = {2020},
-     journal = {arXiv:2005.04840},
+     journal = {ACS Photonics},
+     volume = {7},
+     number = {9},
+     pages = {2350--2355},
+     year = {2020},
+     publisher = {ACS Publications}
    }
   
 
