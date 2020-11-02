@@ -170,6 +170,8 @@ Quick Start
 		     R,T= obj.RT_Solve(normalize=1)
 
 * Example 3: topology optimization of reflection of a single patterned layer, `ex3.py <./example/ex3.py>`_
+
+* Example 4: transmission and reflection (sum or by order) of a hexagonal lattice of a hole: `ex4.py <./example/ex4.py>`_
   
 Note on conventions
 -------------------
