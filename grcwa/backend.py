@@ -44,7 +44,8 @@ class NumpyBackend():
     sqrt = staticmethod(np.sqrt)
     real = staticmethod(np.real)
     imag = staticmethod(np.imag)
-    abs = staticmethod(np.abs)    
+    abs = staticmethod(np.abs)
+    max = staticmethod(np.max)
 
 if AG_AVAILABLE:
     from .primitives import (eig, inv)    
@@ -85,6 +86,7 @@ if AG_AVAILABLE:
         real = staticmethod(npa.real)
         imag = staticmethod(npa.imag)
         abs = staticmethod(npa.abs)
+        max = staticmethod(npa.max)
 
 backend = NumpyBackend()
 

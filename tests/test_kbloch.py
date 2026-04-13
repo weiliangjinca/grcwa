@@ -59,6 +59,36 @@ if AG_AVAILABLE:
         FD, AD = t_grad(fun,grad_fun,x,dx,ind)
         assert abs(FD-AD)<abs(FD)*tol,'wrong fft gradient'        
 
+    def test_fft_pol():
+        '''Autograd gradient of Epsilon_fft_pol epsinv (inverse rule).'''
+        def fun(ep):
+            epout = npa.reshape(ep,(Nx,Ny))
+            epsinv, eps2 = grcwa.Epsilon_fft_pol(dN,epout,G)
+            return npa.real(npa.sum(epsinv))
+
+        grad_fun = grad(fun)
+
+        x = 1.+10.*np.random.random(Nx*Ny)
+        dx = 1e-3
+        ind = np.random.randint(Nx*Ny,size=1)[0]
+        FD, AD = t_grad(fun,grad_fun,x,dx,ind)
+        assert abs(FD-AD)<abs(FD)*tol,'wrong fft_pol epsinv gradient'
+
+    def test_fft_pol_eps2():
+        '''Autograd gradient of Epsilon_fft_pol eps2 (Pol-corrected in-plane).'''
+        def fun(ep):
+            epout = npa.reshape(ep,(Nx,Ny))
+            epsinv, eps2 = grcwa.Epsilon_fft_pol(dN,epout,G)
+            return npa.real(npa.sum(eps2))
+
+        grad_fun = grad(fun)
+
+        x = 1.+10.*np.random.random(Nx*Ny)
+        dx = 1e-3
+        ind = np.random.randint(Nx*Ny,size=1)[0]
+        FD, AD = t_grad(fun,grad_fun,x,dx,ind)
+        assert abs(FD-AD)<abs(FD)*tol,'wrong fft_pol eps2 gradient'
+
     def test_ifft():
         ix = np.random.randint(Nx,size=1)[0]
         iy = np.random.randint(Ny,size=1)[0]
@@ -72,4 +102,4 @@ if AG_AVAILABLE:
         dx = 1e-3
         ind = np.random.randint(nGout,size=1)[0]
         FD, AD = t_grad(fun,grad_fun,x,dx,ind)
-        assert abs(FD-AD)<abs(FD)*tol,'wrong ifft gradient'        
+        assert abs(FD-AD)<abs(FD)*tol,'wrong ifft gradient'

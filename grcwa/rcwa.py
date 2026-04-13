@@ -1,9 +1,10 @@
+import warnings
 from . import backend as bd
-from .fft_funs import Epsilon_fft,get_ifft
+from .fft_funs import Epsilon_fft,Epsilon_fft_pol,get_ifft
 from .kbloch import Lattice_Reciprocate,Lattice_getG,Lattice_SetKs
 
 class obj:
-    def __init__(self,nG,L1,L2,freq,theta,phi,verbose=1):
+    def __init__(self,nG,L1,L2,freq,theta,phi,verbose=1,fmm_method=None,pol_sigma=3.0,pol_niter=20):
         '''The time harmonic convention is exp(-i omega t), speed of light = 1
 
         Two kinds of layers are currently supported: uniform layer,
@@ -13,8 +14,19 @@ class obj:
 
         nG: truncation order, but the actual truncation order might not be nG
         L1,L2: lattice vectors, in the list format, (x,y)
+        fmm_method: None (Laurent's rule, default) or 'pol' (Pol method, S4 Eq. 51)
+        pol_sigma: Gaussian blur sigma (in pixels) for the Pol tangent field.
+            Only used when fmm_method='pol'.
+        pol_niter: number of blur+reset iterations for the Pol tangent field.
+            At each iteration the tangent field is blurred then reset to the
+            exact gradient at interface pixels, approximating a Laplace solve.
+            0 means a single Gaussian blur (no reset). Only used when
+            fmm_method='pol'.
 
         '''
+        self.fmm_method = fmm_method
+        self.pol_sigma = pol_sigma
+        self.pol_niter = pol_niter
         self.freq = freq
         self.omega = 2*bd.pi*freq+0.j
         self.L1 = L1
@@ -164,7 +176,7 @@ class obj:
         for i in range(self.Layer_N):
             if self.id_list[i][0] != 1:
                 continue
-            
+
             Nx = self.GridLayer_Nxy_list[ptri][0]
             Ny = self.GridLayer_Nxy_list[ptri][1]
             dN = 1./Nx/Ny
@@ -173,8 +185,22 @@ class obj:
                 ep_grid = [bd.reshape(ep_all[0][ptr:ptr+Nx*Ny],[Nx,Ny]),bd.reshape(ep_all[1][ptr:ptr+Nx*Ny],[Nx,Ny]),bd.reshape(ep_all[2][ptr:ptr+Nx*Ny],[Nx,Ny])]
             else:
                 ep_grid = bd.reshape(ep_all[ptr:ptr+Nx*Ny],[Nx,Ny])
-            
-            epinv, ep2 = Epsilon_fft(dN,ep_grid,self.G)
+
+            # Pol method: better Fourier convergence for discontinuous eps.
+            # Falls back to FFT for anisotropic grids (3-component eps_grid)
+            # since Pol currently only supports isotropic permittivity.
+            is_anisotropic = len(ep_all) == 3 and ep_all[0].ndim > 0
+            if self.fmm_method == 'pol' and not is_anisotropic:
+                epinv, ep2 = Epsilon_fft_pol(dN,ep_grid,self.G,pol_sigma=self.pol_sigma,pol_niter=self.pol_niter)
+            else:
+                if self.fmm_method == 'pol' and is_anisotropic:
+                    warnings.warn(
+                        "fmm_method='pol' is not supported for anisotropic "
+                        "(3-component) grids; falling back to standard "
+                        "Laurent factorization for this layer.",
+                        stacklevel=2,
+                    )
+                epinv, ep2 = Epsilon_fft(dN,ep_grid,self.G)
 
             self.Patterned_epinv_list[self.id_list[i][2]] = epinv
             self.Patterned_ep2_list[self.id_list[i][2]] = ep2
