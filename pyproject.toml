@@ -1,0 +1,83 @@
+[project]
+name = "grcwa"
+version = "0.1.3"
+description = "Rigorous coupled wave analysis supporting automatic differentiation with autograd"
+readme = "README.rst"
+requires-python = ">=3.8"
+license = { text = "GPL-3.0" }
+authors = [{ name = "Weiliang Jin", email = "jwlaaa@gmail.com" }]
+classifiers = [
+  "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
+  "Natural Language :: English",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+]
+dependencies = [
+  "autograd",
+  "numpy",
+]
+
+[project.urls]
+Homepage = "https://github.com/weiliangjinca/grcwa"
+Repository = "https://github.com/weiliangjinca/grcwa"
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=7.0",
+  "ruff==0.11.11",
+]
+
+[build-system]
+requires = ["hatchling>=1.26.0"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["grcwa"]
+
+[tool.ruff]
+target-version = "py38"
+line-length = 100
+
+[tool.ruff.lint]
+extend-select = [
+  "E",      # pycodestyle errors
+  "F",      # pyflakes
+  "B",      # bugbear
+  "I",      # isort
+  "UP",     # pyupgrade
+  "W",      # pycodestyle warnings
+  "C4",     # flake8-comprehensions
+  "NPY",    # numpy-specific rules
+  "RUF",    # ruff builtins
+  "ISC",    # implicit string concatenation
+  "PIE",    # flake8-pie
+  "RSE",    # unnecessary parentheses on raised exceptions
+  "PLE",    # pylint errors
+  "PLC",    # pylint conventions
+]
+extend-ignore = [
+  "E501",   # line too long
+  "B905",   # `zip()` without an explicit `strict=` parameter
+  "RUF001", # ambiguous unicode characters
+  "RUF002", # ambiguous unicode characters
+  "RUF003", # ambiguous unicode characters
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**/*" = [
+  "E731",   # lambda assignment
+  "F841",   # unused local variable
+  "S101",   # asserts allowed in tests
+  "NPY002", # legacy numpy random (autograd compatibility)
+]
+
+[tool.ruff.format]
+docstring-code-format = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

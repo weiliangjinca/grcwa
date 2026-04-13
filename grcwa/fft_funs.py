@@ -1,35 +1,37 @@
 import numpy as np
+
 from . import backend as bd
 
 # Threshold for detecting material interfaces in the Pol tangent field.
 # Gradients below this are treated as uniform (no interface).
 POL_GRAD_TOL = np.finfo(np.float32).eps  # ~1.19e-7
 
-def Epsilon_fft(dN,eps_grid,G):
-    '''dN = 1/Nx/Ny
+
+def Epsilon_fft(dN, eps_grid, G):
+    """dN = 1/Nx/Ny
     For now, assume epsilon is diagonal; if epsilon has xz,yz component, just simply add them to off-diagonal eps2
 
     eps_grid is  (1) for isotropic, a numpy 2d array in the format of (Nx,Ny),
                  (2) for anisotropic, a list of numpy 2d array [(Nx,Ny),(Nx,Ny),(Nx,Ny)]
-    '''
+    """
 
     if len(eps_grid) == 3 and eps_grid[0].ndim == 2:
-        epsx_fft = get_conv(dN,eps_grid[0],G)
-        epsy_fft = get_conv(dN,eps_grid[1],G)
-        epsz_fft = get_conv(dN,eps_grid[2],G)
+        epsx_fft = get_conv(dN, eps_grid[0], G)
+        epsy_fft = get_conv(dN, eps_grid[1], G)
+        epsz_fft = get_conv(dN, eps_grid[2], G)
         epsinv = bd.inv(epsz_fft)
 
-        tmp1 = bd.vstack((epsx_fft,bd.zeros_like(epsx_fft)))
-        tmp2 = bd.vstack((bd.zeros_like(epsx_fft),epsy_fft))
-        eps2 = bd.hstack((tmp1,tmp2))
+        tmp1 = bd.vstack((epsx_fft, bd.zeros_like(epsx_fft)))
+        tmp2 = bd.vstack((bd.zeros_like(epsx_fft), epsy_fft))
+        eps2 = bd.hstack((tmp1, tmp2))
 
     elif eps_grid[0].ndim == 1:
-        eps_fft = get_conv(dN,eps_grid,G)
+        eps_fft = get_conv(dN, eps_grid, G)
         epsinv = bd.inv(eps_fft)
 
-        tmp1 = bd.vstack((eps_fft,bd.zeros_like(eps_fft)))
-        tmp2 = bd.vstack((bd.zeros_like(eps_fft),eps_fft))
-        eps2 = bd.hstack((tmp1,tmp2))
+        tmp1 = bd.vstack((eps_fft, bd.zeros_like(eps_fft)))
+        tmp2 = bd.vstack((bd.zeros_like(eps_fft), eps_fft))
+        eps2 = bd.hstack((tmp1, tmp2))
     else:
         raise ValueError("Wrong eps_grid type")
 
@@ -37,7 +39,7 @@ def Epsilon_fft(dN,eps_grid,G):
 
 
 def Epsilon_fft_pol(dN, eps_grid, G, pol_sigma=3.0, pol_niter=20):
-    '''Fourier-space epsilon matrices using the Pol method (S4 paper Eq. 51).
+    """Fourier-space epsilon matrices using the Pol method (S4 paper Eq. 51).
 
     Implements the PolBasisVL formulation from S4 (fmm_PolBasisVL.cpp), which
     applies proper Fourier factorization rules (Li 1996/1997) using a tangent
@@ -73,18 +75,20 @@ def Epsilon_fft_pol(dN, eps_grid, G, pol_sigma=3.0, pol_niter=20):
     References
     ----------
     V. Liu & S. Fan, Comp. Phys. Comm. 183, 2233 (2012), Eq. 51.
-    '''
+    """
 
     # --- epsinv: inverse rule for Ez (always normal to layers) ---
     inveps_grid = 1.0 / eps_grid
-    eta_hat = get_conv(dN, inveps_grid, G)    # Toeplitz(1/eps)
+    eta_hat = get_conv(dN, inveps_grid, G)  # Toeplitz(1/eps)
     epsinv = eta_hat
 
     # --- eps2: Pol-corrected in-plane epsilon ---
-    eps_hat = get_conv(dN, eps_grid, G)       # Toeplitz(eps)
+    eps_hat = get_conv(dN, eps_grid, G)  # Toeplitz(eps)
 
     # Tangent-field projection operators P_ij (autograd-compatible)
-    P_xx, P_xy, P_yx, P_yy = _compute_tangent_field_pol(eps_grid, pol_sigma=pol_sigma, pol_niter=pol_niter)
+    P_xx, P_xy, P_yx, P_yy = _compute_tangent_field_pol(
+        eps_grid, pol_sigma=pol_sigma, pol_niter=pol_niter
+    )
 
     # Fourier-transform the projection operators into (nG, nG) matrices
     P_xx_hat = get_conv(dN, P_xx, G)
@@ -111,7 +115,7 @@ def Epsilon_fft_pol(dN, eps_grid, G, pol_sigma=3.0, pol_niter=20):
 
 
 def _compute_tangent_field_pol(eps_grid, pol_sigma=3.0, pol_niter=20):
-    '''Tangent vector field and projection operators for the Pol method.
+    """Tangent vector field and projection operators for the Pol method.
 
     Computes a smooth tangent vector field at material interfaces and returns
     the outer-product projection matrices P_ij = t_i * t_j used by
@@ -148,7 +152,7 @@ def _compute_tangent_field_pol(eps_grid, pol_sigma=3.0, pol_niter=20):
     P_xx, P_xy, P_yx, P_yy : 2d arrays (Nx, Ny)
         Projection-operator components.  P_yx == P_xy (symmetric).
         Autograd-tracked when eps_grid is tracked.
-    '''
+    """
     Nx = eps_grid.shape[0]
     Ny = eps_grid.shape[1]
 
@@ -164,11 +168,16 @@ def _compute_tangent_field_pol(eps_grid, pol_sigma=3.0, pol_niter=20):
 
     # Early exit for uniform permittivity (detached check on both parts)
     def _detach(arr):
-        return np.real(np.asarray(arr._value if hasattr(arr, '_value') else arr))
-    _max_grad = np.sqrt(np.max(
-        _detach(grad_x_re)**2 + _detach(grad_y_re)**2 +
-        _detach(grad_x_im)**2 + _detach(grad_y_im)**2
-    ))
+        return np.real(np.asarray(arr._value if hasattr(arr, "_value") else arr))
+
+    _max_grad = np.sqrt(
+        np.max(
+            _detach(grad_x_re) ** 2
+            + _detach(grad_y_re) ** 2
+            + _detach(grad_x_im) ** 2
+            + _detach(grad_y_im) ** 2
+        )
+    )
     if _max_grad < POL_GRAD_TOL:
         z = bd.zeros_like(eps_re)
         return z, z, z, z
@@ -187,7 +196,7 @@ def _compute_tangent_field_pol(eps_grid, pol_sigma=3.0, pol_niter=20):
     # BC at interface pixels, producing a smooth harmonic extension.
     kx_freq = np.fft.fftfreq(Nx)
     ky_freq = np.fft.fftfreq(Ny)
-    KX, KY = np.meshgrid(kx_freq, ky_freq, indexing='ij')
+    KX, KY = np.meshgrid(kx_freq, ky_freq, indexing="ij")
     blur_kernel = np.exp(-2 * np.pi**2 * pol_sigma**2 * (KX**2 + KY**2))
 
     if pol_niter <= 0:
@@ -197,8 +206,10 @@ def _compute_tangent_field_pol(eps_grid, pol_sigma=3.0, pol_niter=20):
     else:
         # Interface mask: constant (detached) binary array.
         _grad_mag = np.sqrt(
-            _detach(grad_x_re)**2 + _detach(grad_y_re)**2 +
-            _detach(grad_x_im)**2 + _detach(grad_y_im)**2
+            _detach(grad_x_re) ** 2
+            + _detach(grad_y_re) ** 2
+            + _detach(grad_x_im) ** 2
+            + _detach(grad_y_im) ** 2
         )
         mask = (_grad_mag > POL_GRAD_TOL).astype(float)
         mask_inv = 1.0 - mask
@@ -212,7 +223,7 @@ def _compute_tangent_field_pol(eps_grid, pol_sigma=3.0, pol_niter=20):
     # --- 4. Pol scaling: max|t| = 1 ---
     t_mag_sq = tx * tx + ty * ty
     # Detached check only -- the normalisation itself is differentiable.
-    _raw_mag = np.real(np.asarray(t_mag_sq._value if hasattr(t_mag_sq, '_value') else t_mag_sq))
+    _raw_mag = np.real(np.asarray(t_mag_sq._value if hasattr(t_mag_sq, "_value") else t_mag_sq))
     if np.max(_raw_mag) < POL_GRAD_TOL**2:
         z = bd.zeros_like(eps_re)
         return z, z, z, z
@@ -228,8 +239,8 @@ def _compute_tangent_field_pol(eps_grid, pol_sigma=3.0, pol_niter=20):
     return P_xx, P_xy, P_xy, P_yy
 
 
-def get_conv(dN,s_in,G):
-    ''' Attain convolution matrix
+def get_conv(dN, s_in, G):
+    """Attain convolution matrix
     dN = 1/Nx/Ny
     s_in: np.array of length Nx*Ny
     G: shape (nG,2), 2 for Lk1,Lk2
@@ -237,14 +248,14 @@ def get_conv(dN,s_in,G):
 
     Auto-upsamples via nearest-neighbor when the grid is too coarse
     for the requested G-vectors (prevents FFT index wrap-around).
-    '''
-    nG,_ = G.shape
+    """
+    nG, _ = G.shape
     Nx = s_in.shape[0]
     Ny = s_in.shape[1]
 
     # Check if grid is large enough for the G-vector differences
-    max_gdiff_x = int(np.max(G[:,0])) - int(np.min(G[:,0]))
-    max_gdiff_y = int(np.max(G[:,1])) - int(np.min(G[:,1]))
+    max_gdiff_x = int(np.max(G[:, 0])) - int(np.min(G[:, 0]))
+    max_gdiff_y = int(np.max(G[:, 1])) - int(np.min(G[:, 1]))
 
     if max_gdiff_x >= Nx or max_gdiff_y >= Ny:
         # Upsample via nearest-neighbor (autograd-safe integer-division indexing)
@@ -258,41 +269,42 @@ def get_conv(dN,s_in,G):
         s_work = s_in
         dN_work = dN
 
-    sfft = bd.fft2(s_work)*dN_work
+    sfft = bd.fft2(s_work) * dN_work
 
     ix = range(nG)
-    ii,jj = bd.meshgrid(ix,ix,indexing='ij')
-    s_out = sfft[G[ii,0]-G[jj,0], G[ii,1]-G[jj,1]]
+    ii, jj = bd.meshgrid(ix, ix, indexing="ij")
+    s_out = sfft[G[ii, 0] - G[jj, 0], G[ii, 1] - G[jj, 1]]
     return s_out
 
-def get_fft(dN,s_in,G):
-    '''
+
+def get_fft(dN, s_in, G):
+    """
     FFT to get Fourier components
 
     s_in: np.2d array of size (Nx,Ny)
     G: shape (nG,2), 2 for Gx,Gy
     s_out: 1/N sum a_m exp(-2pi i mk/n), shape (nGx*nGy)
-    '''
+    """
 
-    sfft = bd.fft2(s_in)*dN
-    return sfft[G[:,0],G[:,1]]
+    sfft = bd.fft2(s_in) * dN
+    return sfft[G[:, 0], G[:, 1]]
 
 
-def get_ifft(Nx,Ny,s_in,G):
-    '''
+def get_ifft(Nx, Ny, s_in, G):
+    """
     Reconstruct real-space fields
-    '''
-    dN = 1./Nx/Ny
-    nG,_ = G.shape
+    """
+    dN = 1.0 / Nx / Ny
+    nG, _ = G.shape
 
-    s0 = bd.zeros((Nx,Ny),dtype=complex)
+    s0 = bd.zeros((Nx, Ny), dtype=complex)
     for i in range(nG):
-        x = G[i,0]
-        y = G[i,1]
+        x = G[i, 0]
+        y = G[i, 1]
 
-        stmp = bd.zeros((Nx,Ny),dtype=complex)
-        stmp[x,y] = 1.
-        s0 = s0 + s_in[i]*stmp
+        stmp = bd.zeros((Nx, Ny), dtype=complex)
+        stmp[x, y] = 1.0
+        s0 = s0 + s_in[i] * stmp
 
-    s_out = bd.ifft2(s0)/dN
+    s_out = bd.ifft2(s0) / dN
     return s_out
